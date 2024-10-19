@@ -1,4 +1,4 @@
-import game.HangmanGame;
+import game.*;
 import game.HangmanGameAutoGuesser;
 import game.HangmanGameCheatingComputer;
 import util.HangmanDictionary;
@@ -14,13 +14,16 @@ import util.HangmanDictionary;
  */
 public class Main {
     public static final String DICTIONARY = "data/lowerwords.txt";
-    public static final int NUM_LETTERS = 6;
-    public static final int NUM_MISSES = 8;
+	public static final int NUM_MISSES = 8;
+	public static final int NUM_LETTERS = 6;
 
 
     public static void main (String[] args) {
-        //new HangmanGameInteractiveGuesser(new HangmanDictionary(DICTIONARY), NUM_LETTERS, NUM_MISSES).play();
-        //new HangmanGameAutoGuesser(new HangmanDictionary(DICTIONARY), NUM_LETTERS, NUM_MISSES).play();
-    	new HangmanGameCheatingComputer(new HangmanDictionary(DICTIONARY), NUM_LETTERS, NUM_MISSES).play();
+    	Guesser manualGuesser = new ManualGuesser();
+    	Guesser autoGuesser = new HangmanGameAutoGuesser();
+    	Executioner cheatExecutioner = new HangmanGameCheatingComputer(new HangmanDictionary(DICTIONARY), NUM_LETTERS, NUM_MISSES);
+    	Executioner cleanExecutioner = new NoCheatExecutioner(new HangmanDictionary(DICTIONARY), NUM_LETTERS, NUM_MISSES);
+    	
+    	new HangmanGame(manualGuesser, cheatExecutioner).play();
     }
 }
